@@ -1,0 +1,422 @@
+[
+  {
+    "name": "Margarina 250G",
+    "price": 345,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Leite integral 1L",
+    "price": 468,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Batata palha extra fina 100G",
+    "price": 698,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Salgadinho torcida 70g",
+    "price": 218,
+    "qty": 3,
+    "checked": false
+  },
+  {
+    "name": "Pipoca Reizinho (Snacks)",
+    "price": 128,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Salgadinho Jobipos 30g (Snacks)",
+    "price": 55,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Creme de leite 200g",
+    "price": 358,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Açaí",
+    "price": 1180,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Coca cola 250ML",
+    "price": 218,
+    "qty": 24,
+    "checked": false
+  },
+  {
+    "name": "Extrato de tomate 300g",
+    "price": 298,
+    "qty": 7,
+    "checked": false
+  },
+  {
+    "name": "Papel Higiênico 16 Unidades",
+    "price": 1898,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Limão 0,700KG",
+    "price": 174,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Cebola 0,695KG",
+    "price": 275,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Macarrão espaguete fino 400g",
+    "price": 328,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Suco 1L",
+    "price": 298,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Danone",
+    "price": 398,
+    "qty": 1,
+    "unit": 6
+  },
+  {
+    "name": "Batata 0,545KG",
+    "price": 299,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Milho 170g",
+    "price": 498,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Amaciante 1.5L",
+    "price": 3285,
+    "qty": 1,
+    "unit" : 1.5
+  },
+  {
+    "name": "Vinagre 750ML",
+    "price": 158,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Detergente 500ML",
+    "price": 185,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Sabão em pó",
+    "price": 365,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Biscoito doce vitarella delicita",
+    "price": 798,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Creme dental 150g",
+    "price": 1998,
+    "qty": 1,
+    "unit": 2
+  },
+  {
+    "name": "Absorvente noturno",
+    "price": 2458,
+    "qty": 1,
+    "unit": 30
+  },
+  {
+    "name": "Cif cremoso laranja 450ML",
+    "price": 1758,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Água sanitária 1L",
+    "price": 158,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Iogurte natural 170g",
+    "price": 268,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Desodorante 200ML",
+    "price": 1298,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Catchup 380g",
+    "price": 428,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Biscoito oreo 36gx4",
+    "price": 598,
+    "qty": 1,
+    "unit": 4
+  },
+  {
+    "name": "Escova dental",
+    "price": 1898,
+    "qty": 1,
+    "unit": 2
+  },
+  {
+    "name": "Arroz 1kg",
+    "price": 478,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Pimentão 0,225KG",
+    "price": 180,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Água com gás 500ML",
+    "price": 148,
+    "qty": 4,
+    "unit": 0.5
+  },
+  {
+    "name": "Papel alumínio 30CM",
+    "price": 288,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Ice 275ML",
+    "price": 548,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Vinho frisante 750ML",
+    "price": 1798,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Sabonete 85G",
+    "price": 278,
+    "qty": 3,
+    "checked": false
+  },
+  {
+    "name": "Desifetante 500ML",
+    "price": 538,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Pato pastilhas",
+    "price": 1468,
+    "qty": 1,
+    "unit": 6
+  },
+  {
+    "name": "Salsicha 500G",
+    "price": 998,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Leite em pó 200G",
+    "price": 578,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Pipoca microondas 100G",
+    "price": 578,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Alho 0,195KG",
+    "price": 360,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Cerveja 350ML",
+    "price": 388,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Cuscuz 500G",
+    "price": 195,
+    "qty": 2,
+    "checked": false
+  },
+  {
+    "name": "Requeijão light 200G",
+    "price": 828,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Gillete",
+    "price": 2578,
+    "qty": 1,
+    "unit": 4
+  },
+  {
+    "name": "Sazon do nordeste",
+    "price": 478,
+    "qty": 3,
+    "checked": false
+  },
+  {
+    "name": "Leite condensado 395G",
+    "price": 778,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Leite condensado Italac",
+    "price": 598,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Pacoca 16 Unidades",
+    "price": 798,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Cotonete 75 unidades",
+    "price": 638,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Pilha AA",
+    "price": 585,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Presunto 180G",
+    "price": 828,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Fosfóro 10 Unidade",
+    "price": 438,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Torrada 142G",
+    "price": 498,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Biscoito treloso 37G",
+    "price": 89,
+    "qty": 6,
+    "checked": false
+  },
+  {
+    "name": "Coca cola 220ML",
+    "price": 258,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Queijo 150G",
+    "price": 915,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Redbull 250ML",
+    "price": 498,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Schewppes ginger ale 350ML",
+    "price": 258,
+    "qty": 4,
+    "checked": false
+  },
+  {
+    "name": "Massa para bolo 400G",
+    "price": 398,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Maionese 335G",
+    "price": 1398,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Vinho chileno 750ML",
+    "price": 2390,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Azeite 500ML",
+    "price": 2898,
+    "qty": 1,
+    "unit": 0.5
+  },
+  {
+    "name": "Petisco cachorro 65G",
+    "price": 638,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Granulado 120G",
+    "price": 368,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Molho de tomate pizza 300G",
+    "price": 228,
+    "qty": 1,
+    "checked": false
+  }
+]
