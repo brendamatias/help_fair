@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 
 type InputProps = {
@@ -9,21 +9,11 @@ export const Input = ({ defaultValue }: InputProps) => {
   const [value, setValue] = useState<string | undefined>(
     (defaultValue / 100).toString(),
   )
-  const [width, setWidth] = useState(0)
-  const span = useRef()
-
-  useEffect(() => {
-    setWidth(span.current.offsetWidth)
-  }, [value])
 
   return (
     <div>
-      <span className="invisible absolute" ref={span} style={{ maxWidth: 200 }}>
-        R$ {value}
-      </span>
       <CurrencyInput
-        className="font-semibold text-white bg-transparent"
-        style={{ width: width + 1, maxWidth: 200 }}
+        className="font-semibold text-white bg-transparent text-xs sm:text-base text-right w-20"
         intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
         decimalSeparator=","
         groupSeparator="."

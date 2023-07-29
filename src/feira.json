@@ -90,10 +90,10 @@
     "checked": false
   },
   {
-    "name": "Danone",
+    "name": "Danone 6 unidades",
     "price": 398,
     "qty": 1,
-    "unit": 6
+    "checked": false
   },
   {
     "name": "Batata 0,545KG",
@@ -111,7 +111,7 @@
     "name": "Amaciante 1.5L",
     "price": 3285,
     "qty": 1,
-    "unit" : 1.5
+    "checked": false
   },
   {
     "name": "Vinagre 750ML",
@@ -138,16 +138,16 @@
     "checked": false
   },
   {
-    "name": "Creme dental 150g",
+    "name": "Creme dental 2x150g",
     "price": 1998,
     "qty": 1,
-    "unit": 2
+    "checked": false
   },
   {
-    "name": "Absorvente noturno",
+    "name": "Absorvente noturno 30 Unidades",
     "price": 2458,
     "qty": 1,
-    "unit": 30
+    "checked": false
   },
   {
     "name": "Cif cremoso laranja 450ML",
@@ -183,13 +183,7 @@
     "name": "Biscoito oreo 36gx4",
     "price": 598,
     "qty": 1,
-    "unit": 4
-  },
-  {
-    "name": "Escova dental",
-    "price": 1898,
-    "qty": 1,
-    "unit": 2
+    "checked": false
   },
   {
     "name": "Arroz 1kg",
@@ -207,7 +201,7 @@
     "name": "Água com gás 500ML",
     "price": 148,
     "qty": 4,
-    "unit": 0.5
+    "checked": false
   },
   {
     "name": "Papel alumínio 30CM",
@@ -240,10 +234,10 @@
     "checked": false
   },
   {
-    "name": "Pato pastilhas",
+    "name": "Pato pastilhas 6 unidades",
     "price": 1468,
     "qty": 1,
-    "unit": 6
+    "checked": false
   },
   {
     "name": "Salsicha 500G",
@@ -288,10 +282,10 @@
     "checked": false
   },
   {
-    "name": "Gillete",
+    "name": "Gillete 4 unidades",
     "price": 2578,
     "qty": 1,
-    "unit": 4
+    "checked": false
   },
   {
     "name": "Sazon do nordeste",
@@ -399,7 +393,7 @@
     "name": "Azeite 500ML",
     "price": 2898,
     "qty": 1,
-    "unit": 0.5
+    "checked": false
   },
   {
     "name": "Petisco cachorro 65G",
@@ -416,6 +410,12 @@
   {
     "name": "Molho de tomate pizza 300G",
     "price": 228,
+    "qty": 1,
+    "checked": false
+  },
+  {
+    "name": "Escova de dente 2 unidades",
+    "price": 1898,
     "qty": 1,
     "checked": false
   }
