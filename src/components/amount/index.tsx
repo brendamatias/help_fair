@@ -1,11 +1,11 @@
 import { formatPrice } from '../../utils/format'
 
-type FooterProps = {
+type AmountProps = {
   total: number
   predictedValue: number
 }
 
-export const Footer = ({ total, predictedValue }: FooterProps) => {
+export const Amount = ({ total, predictedValue }: AmountProps) => {
   return (
     <div className="w-full fixed bottom-0 px-6 bg-slate-950">
       <div className="max-w-md m-auto py-8">

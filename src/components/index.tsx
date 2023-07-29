@@ -1,2 +1,2 @@
-export * from './footer'
-export * from './input'
+export * from './amount'
+export * from './currencyInput'
