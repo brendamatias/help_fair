@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoChevronBack, IoAdd, IoSearch } from 'react-icons/io5'
 import { formatPrice } from '@/utils/format'
 import { CurrencyInput, Amount, CreatableSelect } from '@/components'
@@ -8,13 +8,6 @@ import FairService from '@/services/fair.service'
 import FairProductService from '@/services/fairProduct.service'
 import ProductService from '@/services/product.service'
 import { toast } from 'react-toastify'
-
-type Item = {
-  name: string
-  price: number
-  qty: number
-  checked: boolean
-}
 
 export const FairDetails: React.FC = () => {
   const { id = '' } = useParams()
@@ -149,7 +142,7 @@ export const FairDetails: React.FC = () => {
   const getProductList = async () => {
     try {
       const { data } = await ProductService.getProductList()
-      const optionsFormatted = data.map(({ _id, name }) => {
+      const optionsFormatted = data.map(({ name }) => {
         return { value: name, label: name }
       })
 
