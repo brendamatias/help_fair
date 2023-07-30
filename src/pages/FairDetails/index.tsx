@@ -44,24 +44,13 @@ export const FairDetails: React.FC = () => {
     return items.findIndex((item) => item._id === _id)
   }
 
-  const handleCheck = async (productId: string) => {
-    const index = findIndex(productId)
-
+  const handleCheck = async (productId: string, bought: boolean) => {
     try {
-      const { data } = await FairProductService.updateFairProduct(
-        id,
-        productId,
-        {
-          bought: !items[index].bought,
-        },
-      )
-      const newItems = [...items]
-      newItems[index] = data
+      await FairProductService.updateFairProduct(id, productId, {
+        bought,
+      })
 
-      const ordered = orderByChecked(newItems)
-
-      setItems(ordered)
-      setFilteredItems(ordered)
+      await getFairProductList()
       setFilter('')
     } catch (error: any) {
       toast.error(
@@ -84,25 +73,12 @@ export const FairDetails: React.FC = () => {
   }
 
   const handleIncrementOrDecrement = async (productId: string, qty: number) => {
-    const index = findIndex(productId)
-
     try {
-      const { data } = await FairProductService.updateFairProduct(
-        id,
-        productId,
-        {
-          qty,
-        },
-      )
+      await FairProductService.updateFairProduct(id, productId, {
+        qty,
+      })
 
-      const newItems = [...items]
-
-      newItems[index] = data
-
-      const ordered = orderByChecked(newItems)
-
-      setItems(ordered)
-      setFilteredItems(ordered)
+      await getFairProductList()
       setFilter('')
     } catch (error: any) {
       toast.error(
@@ -270,12 +246,10 @@ export const FairDetails: React.FC = () => {
           {filteredItems.map(({ _id, name, price, qty, bought }) => (
             <li key={name} className="py-3">
               <div className="flex items-center space-x-4">
-                <button onClick={() => handleCheck(_id)}>
+                <button onClick={() => handleCheck(_id, !bought)}>
                   <svg
                     className={`w-3.5 h-3.5 mr-2 flex-shrink-0 transition-all ${
-                      bought
-                        ? 'text-green-400'
-                        : 'text-gray-400 hover:text-green-400'
+                      bought ? 'text-green-400' : 'text-gray-400'
                     }`}
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
