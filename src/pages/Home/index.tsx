@@ -3,8 +3,9 @@ import { IoAdd } from 'react-icons/io5'
 import { formatDate, formatPrice } from '../../utils/format'
 import FairService from '../../services/fair.service'
 import { Fair } from '../../types'
+import { Link } from 'react-router-dom'
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   const [fairs, setFairs] = useState<Fair[]>([])
 
   const getFairList = async () => {
@@ -28,20 +29,20 @@ const Home: React.FC = () => {
           <h1 className="text-white text-2xl font-medium">Lista de feiras</h1>
         </div>
         <div className="flex gap-2">
-          <button>
+          <Link to="/add">
             <IoAdd
               className={'transition-all hover:text-green-500 text-white'}
               size={20}
             />
-          </button>
+          </Link>
         </div>
       </header>
 
       <div className="flex gap-2 mb-2">
-        <button className="text-white text-xs border rounded-sm px-3 py-1 border-gray-700 hover:bg-green-400 hover:text-gray-950 font-semibold">
+        <button className="text-white text-xs border rounded-sm px-3 py-1 border-gray-700 hover:bg-green-500 hover:text-gray-950 font-semibold">
           Em andamento
         </button>
-        <button className="text-white text-xs border rounded-sm px-3 py-1 border-gray-700 hover:bg-green-400 hover:text-gray-950 font-semibold">
+        <button className="text-white text-xs border rounded-sm px-3 py-1 border-gray-700 hover:bg-green-500 hover:text-gray-950 font-semibold">
           Finalizadas
         </button>
       </div>
@@ -54,11 +55,14 @@ const Home: React.FC = () => {
           paddingRight: 6,
         }}
       >
-        {fairs.map(({ id, name, createdAt }) => (
-          <li key={id} className="py-3">
-            <div className="flex items-center space-x-3">
+        {fairs.map(({ _id, name, createdAt }) => (
+          <li key={_id} className="py-3">
+            <Link
+              className="flex items-center space-x-3 w-full"
+              to={`/fairs/${_id}`}
+            >
               <div className="rounded-sm w-2 h-11 bg-red-700" />
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 text-left min-w-0">
                 <strong className="font-medium truncate text-white text-xs sm:text-sm">
                   {name}
                 </strong>
@@ -76,12 +80,10 @@ const Home: React.FC = () => {
                 </strong>
                 <span className="text-gray-500 text-xs">Gastos totais</span>
               </div>
-            </div>
+            </Link>
           </li>
         ))}
       </ul>
     </div>
   )
 }
-
-export default Home

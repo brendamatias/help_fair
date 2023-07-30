@@ -1,5 +1,5 @@
 export interface Fair {
-  id: string
+  _id: string
   name: string
   createdAt: string
 }

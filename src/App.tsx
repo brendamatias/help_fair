@@ -1,7 +1,8 @@
-import Home from './pages/Home'
+import { RouterProvider } from 'react-router-dom'
+import router from './router'
 
 const App: React.FC = () => {
-  return <Home />
+  return <RouterProvider router={router} />
 }
 
 export default App

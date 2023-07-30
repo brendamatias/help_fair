@@ -1,8 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { IoChevronBack, IoAdd, IoSearch } from 'react-icons/io5'
-import { formatPrice } from '../../utils/format'
-import { CurrencyInput, Amount } from '../../components'
-import feira from '../../feira.json'
+import { formatPrice } from '@/utils/format'
+import { CurrencyInput, Amount, CreatableSelect } from '@/components'
+import { Link, useParams } from 'react-router-dom'
+import { Fair, FairProduct } from '@/types'
+import FairService from '@/services/fair.service'
+import FairProductService from '@/services/fairProduct.service'
+import ProductService from '@/services/product.service'
 
 type Item = {
   name: string
@@ -11,12 +15,17 @@ type Item = {
   checked: boolean
 }
 
-const Fair: React.FC = () => {
+export const FairDetails: React.FC = () => {
+  const { id = '' } = useParams()
+
+  const [fair, setFair] = useState<Fair>()
+  const [items, setItems] = useState<FairProduct[]>([])
+  const [filteredItems, setFilteredItems] = useState<FairProduct[]>([])
+  const [options, setOptions] = useState<{ value: string; label: string }[]>([])
+
   const [name, setName] = useState('')
-  const [filter, setFilter] = useState('')
-  const [items, setItems] = useState<Item[]>(feira)
-  const [filteredItems, setFilteredItems] = useState<Item[]>(feira)
   const [search, setSearch] = useState(false)
+  const [filter, setFilter] = useState('')
 
   const filterBySearch = (query: string) => {
     setFilter(query)
@@ -30,42 +39,20 @@ const Fair: React.FC = () => {
     setFilteredItems(filtered)
   }
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault()
-
-    if (!name) return
-
-    const newItems = [...items, { name, price: 0, qty: 0, checked: false }]
-
-    setItems(newItems)
-    setFilteredItems(newItems)
-    setName('')
-  }
-
-  const findIndex = (name: string) => {
-    return items.findIndex((item) => item.name === name)
-  }
-
-  const handleIncrementOrDecrement = (name: string, value: number) => {
-    const index = findIndex(name)
-    const newItems = [...items]
-    newItems[index].qty = newItems[index].qty + value
-
-    setItems(newItems)
+  const findIndex = (_id: string) => {
+    return items.findIndex((item) => item._id === _id)
   }
 
   const handleCheck = (name: string) => {
     const index = findIndex(name)
     const newItems = [...items]
-    newItems[index].checked = !newItems[index].checked
+    newItems[index].bought = !newItems[index].bought
 
     setItems(newItems)
   }
 
   const getTotal = (checked = false) => {
-    return items.reduce((total, { price, qty, checked: checkedValue }) => {
+    return items.reduce((total, { price, qty, bought: checkedValue }) => {
       const sum = total + price * qty
 
       if (checked) {
@@ -76,17 +63,100 @@ const Fair: React.FC = () => {
     }, 0)
   }
 
+  const handleIncrementOrDecrement = async (productId: string, qty: number) => {
+    const index = findIndex(productId)
+
+    try {
+      const { data } = await FairProductService.updateFairProduct(
+        id,
+        productId,
+        {
+          qty,
+        },
+      )
+      const newItems = [...items]
+
+      newItems[index] = data
+
+      setItems(newItems)
+      setFilteredItems(newItems)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getFairList = async () => {
+    try {
+      const { data } = await FairService.getFair(id)
+
+      setFair(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getFairProductList = async () => {
+    try {
+      const { data } = await FairProductService.getFairProductList(id)
+
+      setItems(data)
+      setFilteredItems(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getProductList = async () => {
+    try {
+      const { data } = await ProductService.getProductList()
+      const optionsFormatted = data.map(({ _id, name }) => {
+        return { value: name, label: name }
+      })
+
+      setOptions(optionsFormatted)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const createProduct = async (value: string, newValue?: boolean) => {
+    try {
+      const { data } = await FairProductService.createFairProduct(id, {
+        name: value,
+      })
+
+      const newItems = [...items, data]
+      setItems(newItems)
+      setFilteredItems(newItems)
+      setName('')
+
+      if (newValue) {
+        setOptions([...options, { value, label: value }])
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+
   useEffect(() => {
     setFilteredItems(items)
   }, [search])
+
+  useEffect(() => {
+    getFairList()
+    getFairProductList()
+    getProductList()
+  }, [])
 
   return (
     <>
       <div className="py-8 max-w-md mx-auto px-6 sm:px-0">
         <header className="flex items-center justify-between gap-2 mb-6">
           <div className="flex items-center gap-2">
-            <IoChevronBack className="text-white" size={16} />
-            <h1 className="text-white text-2xl font-medium">Feira 01</h1>
+            <Link to="/">
+              <IoChevronBack className="text-white" size={16} />
+            </Link>
+            <h1 className="text-white text-2xl font-medium">{fair?.name}</h1>
           </div>
           <div className="flex gap-2">
             <button onClick={() => setSearch(true)}>
@@ -117,21 +187,22 @@ const Fair: React.FC = () => {
             style={{ color: '#3a3a3a' }}
           />
         ) : (
-          <form onSubmit={handleSubmit} className="max-w-md flex mx-auto mb-6">
-            <input
+          <div className="max-w-md flex mx-auto mb-6">
+            <CreatableSelect options={options} onCreate={createProduct} />
+            {/* <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Digite o nome do item"
               className="text-sm h-12 px-6 rounded-l-md w-full"
               style={{ color: '#3a3a3a' }}
-            />
-            <button
+            /> */}
+            {/* <button
               type="submit"
               className="w-52 text-white bg-green-500 rounded-r-md text-sm"
             >
               Inserir
-            </button>
-          </form>
+            </button> */}
+          </div>
         )}
 
         <ul
@@ -142,13 +213,13 @@ const Fair: React.FC = () => {
             paddingRight: 6,
           }}
         >
-          {filteredItems.map(({ name, price, qty, checked }) => (
+          {filteredItems.map(({ _id, name, price, qty, bought }) => (
             <li key={name} className="py-3">
               <div className="flex items-center space-x-4">
                 <button onClick={() => handleCheck(name)}>
                   <svg
                     className={`w-3.5 h-3.5 mr-2 flex-shrink-0 transition-all ${
-                      checked
+                      bought
                         ? 'text-green-400'
                         : 'text-gray-400 hover:text-green-400'
                     }`}
@@ -170,7 +241,7 @@ const Fair: React.FC = () => {
                     <button
                       className="text-xs sm:text-sm font-medium text-gray-400 disabled:text-gray-700"
                       disabled={qty === 0}
-                      onClick={() => handleIncrementOrDecrement(name, -1)}
+                      onClick={() => handleIncrementOrDecrement(_id, qty - 1)}
                     >
                       -
                     </button>
@@ -179,7 +250,7 @@ const Fair: React.FC = () => {
                     </span>
                     <button
                       className="text-xs sm:text-sm font-medium text-gray-400"
-                      onClick={() => handleIncrementOrDecrement(name, +1)}
+                      onClick={() => handleIncrementOrDecrement(_id, qty + 1)}
                     >
                       +
                     </button>
@@ -205,5 +276,3 @@ const Fair: React.FC = () => {
     </>
   )
 }
-
-export default Fair
