@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import { Home, FairDetails } from '@/pages'
+import { Home, CreateFair, FairDetails } from '@/pages'
 
 const routes = [
   { path: '/', element: <Home /> },
+  { path: '/add', element: <CreateFair /> },
   { path: '/fairs/:id', element: <FairDetails /> },
 ]
 

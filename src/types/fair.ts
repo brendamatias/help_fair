@@ -1,6 +1,7 @@
 export interface Fair {
   _id: string
   name: string
+  status: 'IN_PROGRESS' | 'FINISHED'
   createdAt: string
 }
 
@@ -14,4 +15,5 @@ export interface FairListResponse {
 
 export interface CreateFairRequest {
   name: string
+  template: string | null
 }

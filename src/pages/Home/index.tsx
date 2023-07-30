@@ -59,13 +59,17 @@ export const Home: React.FC = () => {
           paddingRight: 6,
         }}
       >
-        {fairs.map(({ _id, name, createdAt }) => (
+        {fairs.map(({ _id, name, status, createdAt }) => (
           <li key={_id} className="py-3">
             <Link
               className="flex items-center space-x-3 w-full"
               to={`/fairs/${_id}`}
             >
-              <div className="rounded-sm w-2 h-11 bg-red-700" />
+              <div
+                className={`rounded-sm w-2 h-11 ${
+                  status === 'FINISHED' ? 'bg-red-700' : 'bg-green-500'
+                }`}
+              />
               <div className="flex-1 text-left min-w-0">
                 <strong className="font-medium truncate text-white text-xs sm:text-sm">
                   {name}
