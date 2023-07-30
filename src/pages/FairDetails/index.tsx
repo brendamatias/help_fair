@@ -24,9 +24,16 @@ export const FairDetails: React.FC = () => {
   const [filteredItems, setFilteredItems] = useState<FairProduct[]>([])
   const [options, setOptions] = useState<{ value: string; label: string }[]>([])
 
-  const [name, setName] = useState('')
   const [search, setSearch] = useState(false)
   const [filter, setFilter] = useState('')
+
+  const orderByChecked = (fairProducts: FairProduct[]) => {
+    const checkedList = fairProducts.filter((item) => item.bought)
+    const notCheckedList = fairProducts.filter((item) => !item.bought)
+    const ordered = [...notCheckedList, ...checkedList]
+
+    return ordered
+  }
 
   const filterBySearch = (query: string) => {
     setFilter(query)
@@ -37,19 +44,37 @@ export const FairDetails: React.FC = () => {
       (item) => item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1,
     )
 
-    setFilteredItems(filtered)
+    setFilteredItems(orderByChecked(filtered))
   }
 
   const findIndex = (_id: string) => {
     return items.findIndex((item) => item._id === _id)
   }
 
-  const handleCheck = (name: string) => {
-    const index = findIndex(name)
-    const newItems = [...items]
-    newItems[index].bought = !newItems[index].bought
+  const handleCheck = async (productId: string) => {
+    const index = findIndex(productId)
 
-    setItems(newItems)
+    try {
+      const { data } = await FairProductService.updateFairProduct(
+        id,
+        productId,
+        {
+          bought: !items[index].bought,
+        },
+      )
+      const newItems = [...items]
+      newItems[index] = data
+
+      const ordered = orderByChecked(newItems)
+
+      setItems(ordered)
+      setFilteredItems(ordered)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
+    }
   }
 
   const getTotal = (checked = false) => {
@@ -79,8 +104,10 @@ export const FairDetails: React.FC = () => {
 
       newItems[index] = data
 
-      setItems(newItems)
-      setFilteredItems(newItems)
+      const ordered = orderByChecked(newItems)
+
+      setItems(ordered)
+      setFilteredItems(ordered)
     } catch (error: any) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -141,7 +168,6 @@ export const FairDetails: React.FC = () => {
       const newItems = [...items, data]
       setItems(newItems)
       setFilteredItems(newItems)
-      setName('')
 
       if (newValue) {
         setOptions([...options, { value, label: value }])
@@ -205,19 +231,6 @@ export const FairDetails: React.FC = () => {
         ) : (
           <div className="max-w-md flex mx-auto mb-6">
             <CreatableSelect options={options} onCreate={createProduct} />
-            {/* <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Digite o nome do item"
-              className="text-sm h-12 px-6 rounded-l-md w-full"
-              style={{ color: '#3a3a3a' }}
-            /> */}
-            {/* <button
-              type="submit"
-              className="w-52 text-white bg-green-500 rounded-r-md text-sm"
-            >
-              Inserir
-            </button> */}
           </div>
         )}
 
@@ -232,7 +245,7 @@ export const FairDetails: React.FC = () => {
           {filteredItems.map(({ _id, name, price, qty, bought }) => (
             <li key={name} className="py-3">
               <div className="flex items-center space-x-4">
-                <button onClick={() => handleCheck(name)}>
+                <button onClick={() => handleCheck(_id)}>
                   <svg
                     className={`w-3.5 h-3.5 mr-2 flex-shrink-0 transition-all ${
                       bought
