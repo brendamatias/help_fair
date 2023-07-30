@@ -69,6 +69,7 @@ export const FairDetails: React.FC = () => {
 
       setItems(ordered)
       setFilteredItems(ordered)
+      setFilter('')
     } catch (error: any) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -100,6 +101,7 @@ export const FairDetails: React.FC = () => {
           qty,
         },
       )
+
       const newItems = [...items]
 
       newItems[index] = data
@@ -108,6 +110,7 @@ export const FairDetails: React.FC = () => {
 
       setItems(ordered)
       setFilteredItems(ordered)
+      setFilter('')
     } catch (error: any) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -172,6 +175,35 @@ export const FairDetails: React.FC = () => {
       if (newValue) {
         setOptions([...options, { value, label: value }])
       }
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
+    }
+  }
+
+  const updatePrice = async (productId: string, price: number) => {
+    const index = findIndex(productId)
+
+    try {
+      const { data } = await FairProductService.updateFairProduct(
+        id,
+        productId,
+        {
+          price,
+        },
+      )
+
+      const newItems = [...items]
+
+      newItems[index] = data
+
+      const ordered = orderByChecked(newItems)
+
+      setItems(ordered)
+      setFilteredItems(ordered)
+      setFilter('')
     } catch (error: any) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -290,7 +322,12 @@ export const FairDetails: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col items-end gap-1">
-                  <CurrencyInput defaultValue={price} />
+                  <CurrencyInput
+                    defaultValue={price}
+                    updatePrice={(newPrice: number) =>
+                      updatePrice(_id, newPrice)
+                    }
+                  />
                   <span className="text-gray-500 text-xs">
                     Total: {formatPrice((price / 100) * qty)}
                   </span>
