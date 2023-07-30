@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { IoAdd } from 'react-icons/io5'
-import { formatDate, formatPrice } from '../../utils/format'
-import FairService from '../../services/fair.service'
-import { Fair } from '../../types'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { IoAdd } from 'react-icons/io5'
+import { formatDate, formatPrice } from '@/utils/format'
+import FairService from '@/services/fair.service'
+import { Fair } from '@/types'
 
 export const Home: React.FC = () => {
   const [fairs, setFairs] = useState<Fair[]>([])
@@ -13,8 +14,11 @@ export const Home: React.FC = () => {
       const { data } = await FairService.getFairList()
 
       setFairs(data)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 

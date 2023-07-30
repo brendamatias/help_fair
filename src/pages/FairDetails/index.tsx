@@ -7,6 +7,7 @@ import { Fair, FairProduct } from '@/types'
 import FairService from '@/services/fair.service'
 import FairProductService from '@/services/fairProduct.service'
 import ProductService from '@/services/product.service'
+import { toast } from 'react-toastify'
 
 type Item = {
   name: string
@@ -80,8 +81,11 @@ export const FairDetails: React.FC = () => {
 
       setItems(newItems)
       setFilteredItems(newItems)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 
@@ -90,8 +94,11 @@ export const FairDetails: React.FC = () => {
       const { data } = await FairService.getFair(id)
 
       setFair(data)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 
@@ -101,8 +108,11 @@ export const FairDetails: React.FC = () => {
 
       setItems(data)
       setFilteredItems(data)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 
@@ -114,8 +124,11 @@ export const FairDetails: React.FC = () => {
       })
 
       setOptions(optionsFormatted)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 
@@ -134,7 +147,10 @@ export const FairDetails: React.FC = () => {
         setOptions([...options, { value, label: value }])
       }
     } catch (error: any) {
-      console.log(error.response)
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
     }
   }
 
