@@ -23,10 +23,14 @@ const updateFairProduct = (
 ): Promise<FairProductResponse> =>
   api.put(`${DOMAIN(fair)}/${product}`, payload)
 
+const deleteFairProduct = (fair: string, product: string): Promise<void> =>
+  api.delete(`${DOMAIN(fair)}/${product}`)
+
 const FairProductService = {
   getFairProductList,
   createFairProduct,
   updateFairProduct,
+  deleteFairProduct,
 }
 
 export default FairProductService

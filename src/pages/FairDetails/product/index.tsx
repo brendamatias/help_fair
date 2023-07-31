@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { IoAdd, IoRemove, IoSave, IoClose } from 'react-icons/io5'
+import {
+  IoAdd,
+  IoRemove,
+  IoSave,
+  IoClose,
+  IoCheckbox,
+  IoSquareOutline,
+} from 'react-icons/io5'
+
 import { FiEdit, FiTrash } from 'react-icons/fi'
 import { toast } from 'react-toastify'
 import { formatPrice } from '@/utils/format'
@@ -59,6 +67,19 @@ export const Product = ({
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      await FairProductService.deleteFairProduct(fairId, product._id)
+
+      onSubmit()
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.error?.message ||
+          'Ocorreu um erro, tente novamente',
+      )
+    }
+  }
+
   return (
     <li className="py-4">
       <div className="flex items-center justify-end gap-4 mb-2">
@@ -71,7 +92,10 @@ export const Product = ({
               Editar
               <FiEdit size={16} />
             </button>
-            <button className="flex items-center text-sm gap-2 border rounded-sm border-gray-900 hover:border-green-500 px-3 py-1 text-gray-400 transition-all hover:text-green-500">
+            <button
+              onClick={handleDelete}
+              className="flex items-center text-sm gap-2 border rounded-sm border-gray-900 hover:border-green-500 px-3 py-1 text-gray-400 transition-all hover:text-green-500"
+            >
               Remover
               <FiTrash size={16} />
             </button>
@@ -97,18 +121,15 @@ export const Product = ({
       </div>
 
       <div className="flex items-center space-x-4">
-        <button onClick={() => handleCheck(product._id, !product.bought)}>
-          <svg
-            className={`w-3.5 h-3.5 mr-2 flex-shrink-0 transition-all ${
-              product.bought ? 'text-green-400' : 'text-gray-400'
-            }`}
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-          </svg>
+        <button
+          onClick={() => handleCheck(product._id, !product.bought)}
+          className={'mr-1 flex-shrink-0 transition-all rounded-sm'}
+        >
+          {product.bought ? (
+            <IoCheckbox className="text-green-400" size={18} />
+          ) : (
+            <IoSquareOutline className="text-gray-400" size={18} />
+          )}
         </button>
 
         <div className="flex-1 min-w-0">

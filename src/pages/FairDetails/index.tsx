@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IoChevronBack, IoAdd, IoSearch } from 'react-icons/io5'
+import { IoChevronBack, IoAdd, IoSearch, IoClose } from 'react-icons/io5'
 import { Amount, CreatableSelect } from '@/components'
 import { Link, useParams } from 'react-router-dom'
 import { Fair, FairProduct } from '@/types'
@@ -112,14 +112,14 @@ export const FairDetails: React.FC = () => {
   }
 
   const createProduct = async (value: string, newValue?: boolean) => {
+    if (!value) return
+
     try {
-      const { data } = await FairProductService.createFairProduct(id, {
+      await FairProductService.createFairProduct(id, {
         name: value,
       })
 
-      const newItems = [...items, data]
-      setItems(newItems)
-      setFilteredItems(newItems)
+      getFairProductList()
 
       if (newValue) {
         setOptions([...options, { value, label: value }])
@@ -154,6 +154,12 @@ export const FairDetails: React.FC = () => {
     getProductList()
   }, [])
 
+  useEffect(() => {
+    if (filter === '') {
+      setFilteredItems(items)
+    }
+  }, [filter])
+
   return (
     <>
       <div className="py-8 max-w-md mx-auto px-6 sm:px-0">
@@ -185,13 +191,17 @@ export const FairDetails: React.FC = () => {
         </header>
 
         {search ? (
-          <input
-            value={filter}
-            onChange={(e) => filterBySearch(e.target.value)}
-            placeholder="Digite o nome do item"
-            className="text-sm h-12 px-6 rounded-md w-full mb-6"
-            style={{ color: '#3a3a3a' }}
-          />
+          <div className="text-sm h-12 px-6 rounded-md w-full mb-6 bg-gray-700 flex items-center">
+            <input
+              value={filter}
+              onChange={(e) => filterBySearch(e.target.value)}
+              placeholder="Digite o nome do item"
+              className="w-full bg-transparent text-white"
+            />
+            <button onClick={() => setFilter('')}>
+              <IoClose className="text-gray-400" size={20} />
+            </button>
+          </div>
         ) : (
           <div className="max-w-md flex mx-auto mb-6">
             <CreatableSelect options={options} onCreate={createProduct} />
