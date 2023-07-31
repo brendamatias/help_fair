@@ -18,7 +18,9 @@ export const CreateFair: React.FC = () => {
       const { data } = await FairService.getFairList()
 
       setFairs(data)
-      setTemplate(data[0]._id)
+      if (data.length > 0) {
+        setTemplate(data[0]._id)
+      }
     } catch (error: any) {
       toast.error(
         error?.response?.data?.error?.message ||
@@ -26,8 +28,6 @@ export const CreateFair: React.FC = () => {
       )
     }
   }
-
-  console.log(template)
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,

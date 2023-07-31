@@ -36,7 +36,7 @@ export const Home: React.FC = () => {
           <Link to="/add">
             <IoAdd
               className={'transition-all hover:text-green-500 text-white'}
-              size={20}
+              size={30}
             />
           </Link>
         </div>
@@ -71,7 +71,7 @@ export const Home: React.FC = () => {
                 }`}
               />
               <div className="flex-1 text-left min-w-0">
-                <strong className="font-medium truncate text-white text-xs sm:text-sm">
+                <strong className="font-medium text-white text-sm">
                   {name}
                 </strong>
 
@@ -83,7 +83,7 @@ export const Home: React.FC = () => {
               </div>
 
               <div className="flex flex-col items-end gap-1">
-                <strong className="font-semibold text-white text-xs sm:text-base text-right">
+                <strong className="font-semibold text-white text-sm text-right">
                   {formatPrice(2)}
                 </strong>
                 <span className="text-gray-500 text-xs">Gastos totais</span>

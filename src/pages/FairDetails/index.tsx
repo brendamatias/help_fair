@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { IoChevronBack, IoAdd, IoSearch } from 'react-icons/io5'
-import { formatPrice } from '@/utils/format'
-import { CurrencyInput, Amount, CreatableSelect } from '@/components'
+import { Amount, CreatableSelect } from '@/components'
 import { Link, useParams } from 'react-router-dom'
 import { Fair, FairProduct } from '@/types'
 import FairService from '@/services/fair.service'
 import FairProductService from '@/services/fairProduct.service'
 import ProductService from '@/services/product.service'
 import { toast } from 'react-toastify'
+import { Product } from './product'
 
 export const FairDetails: React.FC = () => {
   const { id = '' } = useParams()
@@ -40,10 +40,6 @@ export const FairDetails: React.FC = () => {
     setFilteredItems(orderByChecked(filtered))
   }
 
-  const findIndex = (_id: string) => {
-    return items.findIndex((item) => item._id === _id)
-  }
-
   const handleCheck = async (productId: string, bought: boolean) => {
     try {
       await FairProductService.updateFairProduct(id, productId, {
@@ -70,22 +66,6 @@ export const FairDetails: React.FC = () => {
 
       return sum
     }, 0)
-  }
-
-  const handleIncrementOrDecrement = async (productId: string, qty: number) => {
-    try {
-      await FairProductService.updateFairProduct(id, productId, {
-        qty,
-      })
-
-      await getFairProductList()
-      setFilter('')
-    } catch (error: any) {
-      toast.error(
-        error?.response?.data?.error?.message ||
-          'Ocorreu um erro, tente novamente',
-      )
-    }
   }
 
   const getFairList = async () => {
@@ -152,26 +132,9 @@ export const FairDetails: React.FC = () => {
     }
   }
 
-  const updatePrice = async (productId: string, price: number) => {
-    const index = findIndex(productId)
-
+  const onUpdateProduct = async () => {
     try {
-      const { data } = await FairProductService.updateFairProduct(
-        id,
-        productId,
-        {
-          price,
-        },
-      )
-
-      const newItems = [...items]
-
-      newItems[index] = data
-
-      const ordered = orderByChecked(newItems)
-
-      setItems(ordered)
-      setFilteredItems(ordered)
+      await getFairProductList()
       setFilter('')
     } catch (error: any) {
       toast.error(
@@ -201,13 +164,13 @@ export const FairDetails: React.FC = () => {
             </Link>
             <h1 className="text-white text-2xl font-medium">{fair?.name}</h1>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button onClick={() => setSearch(true)}>
               <IoSearch
                 className={`transition-all hover:text-green-500 ${
                   search ? 'text-green-500' : 'text-white'
                 }`}
-                size={18}
+                size={24}
               />
             </button>
             <button onClick={() => setSearch(false)}>
@@ -215,7 +178,7 @@ export const FairDetails: React.FC = () => {
                 className={`transition-all hover:text-green-500 ${
                   !search ? 'text-green-500' : 'text-white'
                 }`}
-                size={20}
+                size={30}
               />
             </button>
           </div>
@@ -243,64 +206,14 @@ export const FairDetails: React.FC = () => {
             paddingRight: 6,
           }}
         >
-          {filteredItems.map(({ _id, name, price, qty, bought }) => (
-            <li key={name} className="py-3">
-              <div className="flex items-center space-x-4">
-                <button onClick={() => handleCheck(_id, !bought)}>
-                  <svg
-                    className={`w-3.5 h-3.5 mr-2 flex-shrink-0 transition-all ${
-                      bought ? 'text-green-400' : 'text-gray-400'
-                    }`}
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                  </svg>
-                </button>
-
-                <div className="flex-1 min-w-0">
-                  <strong className="font-medium text-gray-900 truncate dark:text-white text-xs sm:text-sm">
-                    {name}
-                  </strong>
-
-                  <div className="flex gap-2 items-center">
-                    <button
-                      className="text-xs sm:text-sm font-medium text-gray-400 disabled:text-gray-700"
-                      disabled={qty === 0}
-                      onClick={() => handleIncrementOrDecrement(_id, qty - 1)}
-                    >
-                      -
-                    </button>
-                    <span className="text-xs sm:text-sm text-gray-400">
-                      {qty}
-                    </span>
-                    <button
-                      className="text-xs sm:text-sm font-medium text-gray-400"
-                      onClick={() => handleIncrementOrDecrement(_id, qty + 1)}
-                    >
-                      +
-                    </button>
-                    <span className="text-xs sm:text-sm text-gray-500 truncate dark:text-gray-400">
-                      unidade{qty > 1 && 's'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-end gap-1">
-                  <CurrencyInput
-                    defaultValue={price}
-                    updatePrice={(newPrice: number) =>
-                      updatePrice(_id, newPrice)
-                    }
-                  />
-                  <span className="text-gray-500 text-xs">
-                    Total: {formatPrice((price / 100) * qty)}
-                  </span>
-                </div>
-              </div>
-            </li>
+          {filteredItems.map((item) => (
+            <Product
+              key={item._id}
+              fairId={id}
+              product={item}
+              onSubmit={onUpdateProduct}
+              handleCheck={handleCheck}
+            />
           ))}
         </ul>
       </div>
