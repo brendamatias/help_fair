@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css'
 import { RouterProvider } from 'react-router-dom'
-import router from './router'
 import { ToastContainer } from 'react-toastify'
+import router from './router'
 
 const App: React.FC = () => {
   return (
