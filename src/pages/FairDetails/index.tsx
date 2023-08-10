@@ -165,7 +165,7 @@ export const FairDetails: React.FC = () => {
       <div className="py-8 max-w-md mx-auto px-6 sm:px-0">
         <header className="flex items-center justify-between gap-2 mb-6">
           <div className="flex items-center gap-2">
-            <Link to="/">
+            <Link to="/home">
               <IoChevronBack className="text-white" size={16} />
             </Link>
             <h1 className="text-white text-2xl font-medium">{fair?.name}</h1>

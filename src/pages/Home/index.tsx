@@ -13,12 +13,13 @@ import { Fair } from '@/types'
 
 import logo from '@/assets/logo.svg'
 import { FiSearch } from 'react-icons/fi'
-import { Button, Input } from '@/components'
+import { Button, Input, NewFairModal } from '@/components'
 
 export const Home: React.FC = () => {
   const [fairs, setFairs] = useState<Fair[]>([])
   const [date, setDate] = useState(new Date().toString())
   const [search, setSearch] = useState('')
+  const [isNewFairModalOpen, setIsNewFairModalOpen] = useState(false)
 
   const getFairList = async () => {
     try {
@@ -44,6 +45,14 @@ export const Home: React.FC = () => {
     setDate(currentDate.toString())
   }
 
+  function handleOpenNewFairModal() {
+    setIsNewFairModalOpen(true)
+  }
+
+  function handleCloseNewFairModal() {
+    setIsNewFairModalOpen(false)
+  }
+
   useEffect(() => {
     getFairList()
   }, [date])
@@ -56,7 +65,9 @@ export const Home: React.FC = () => {
             <img src={logo} alt="SOS Fair Logo" className="sm:w-full w-32" />
           </div>
 
-          <Button theme="outlined">Nova feira</Button>
+          <Button theme="outlined" onClick={handleOpenNewFairModal}>
+            Nova feira
+          </Button>
         </div>
       </header>
 
@@ -84,7 +95,11 @@ export const Home: React.FC = () => {
           </div>
 
           <div className="flex gap-4 mb-3 mt-3 sm:mb-6">
-            <Input value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar uma feira"
+            />
             <Button>
               <FiSearch size={18} />
               <span className="hidden sm:block">Buscar</span>
@@ -153,6 +168,12 @@ export const Home: React.FC = () => {
           </ul>
         </div>
       </div>
+
+      <NewFairModal
+        isOpen={isNewFairModalOpen}
+        onRequestClose={handleCloseNewFairModal}
+        onSubmit={getFairList}
+      />
     </>
   )
 }

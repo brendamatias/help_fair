@@ -13,9 +13,7 @@ export const SignUp: React.FC = () => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setLoading(true)
     try {

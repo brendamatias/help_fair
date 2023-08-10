@@ -8,7 +8,9 @@ type ButtonProps = {
 export const Button = ({
   children,
   className = '',
+  type = 'button',
   theme = 'default',
+  ...props
 }: ButtonProps) => {
   const classes =
     theme === 'default'
@@ -17,7 +19,9 @@ export const Button = ({
 
   return (
     <button
+      type={type}
       className={`flex gap-3 items-center text-sm font-semibold py-3 px-6 rounded-md transition-all border-2 ${classes} ${className}`}
+      {...props}
     >
       {children}
     </button>
