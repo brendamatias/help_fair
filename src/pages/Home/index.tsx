@@ -13,10 +13,12 @@ import { Fair } from '@/types'
 
 import logo from '@/assets/logo.svg'
 import { FiSearch } from 'react-icons/fi'
+import { Button, Input } from '@/components'
 
 export const Home: React.FC = () => {
   const [fairs, setFairs] = useState<Fair[]>([])
   const [date, setDate] = useState(new Date().toString())
+  const [search, setSearch] = useState('')
 
   const getFairList = async () => {
     try {
@@ -48,112 +50,101 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      <header
-        className="flex items-center justify-between gap-2 mb-6 px-6 py-4"
-        style={{ background: '#121214' }}
-      >
-        <div className="flex items-center gap-2">
-          <img src={logo} alt="SOS Fair Logo" className="sm:w-full w-32" />
-        </div>
+      <header className="mb-6 py-4 border-b-2 border-slate-200">
+        <div className="max-w-screen-lg mx-auto px-6 flex items-center justify-between gap-2 ">
+          <div className="flex items-center gap-2">
+            <img src={logo} alt="SOS Fair Logo" className="sm:w-full w-32" />
+          </div>
 
-        <Link
-          to="/add"
-          className="transition-all hover:bg-violet-500 text-sm text-white font-semibold bg-violet-600 py-3 px-5 rounded-md"
-        >
-          Nova feira
-        </Link>
+          <Button theme="outlined">Nova feira</Button>
+        </div>
       </header>
 
-      <div className="px-6 py-4">
+      <div className="max-w-screen-lg mx-auto px-6 py-4">
         <div className="flex gap-2 justify-between">
           <button onClick={() => updateDate(-1)}>
-            <MdKeyboardArrowLeft className="text-white text-2xl" />
+            <MdKeyboardArrowLeft className="text-slate-600 text-2xl" />
           </button>
-          <span className="text-white font-semibold">
+          <span className="text-slate-600 font-semibold">
             {monthNames[new Date(date).getMonth()]}
             {' / '}
             {new Date(date).getFullYear()}
           </span>
           <button onClick={() => updateDate(+1)}>
-            <MdKeyboardArrowRight className="text-white text-2xl" />
+            <MdKeyboardArrowRight className="text-slate-600 text-2xl" />
           </button>
         </div>
 
         <div className="my-10">
           <div className="flex justify-between items-center">
-            <span className="text-lg text-gray-400">Feiras</span>
-            <p className="text-sm text-gray-500">
+            <span className="text-2xl text-slate-700 font-bold">Feiras</span>
+            <p className="text-sm text-slate-400">
               {fairs.length} iten{fairs.length > 0 && 's'}
             </p>
           </div>
 
           <div className="flex gap-4 mb-3 mt-3 sm:mb-6">
-            <input
-              className="rounded-md p-4 text-white placeholder:text-gray-500 w-full"
-              style={{ background: '#121214' }}
-              placeholder="Buscar uma feira"
-            />
-            <button className="flex gap-3 items-center text-sm text-violet-500 font-semibold border-violet-500 border rounded-md py-3 px-5 hover:bg-violet-500 hover:text-white transition-all">
+            <Input value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Button>
               <FiSearch size={18} />
               <span className="hidden sm:block">Buscar</span>
-            </button>
+            </Button>
           </div>
 
-          <ul>
+          <ul className="flex flex-col gap-2">
             {fairs.map(({ _id, name, createdAt }) => (
               <li
                 key={_id}
-                className="py-5 px-8 my-2 rounded-md"
-                style={{ background: '#29292E' }}
+                className="py-5 px-8 rounded-md"
+                style={{
+                  background: '#FEFEFE',
+                  boxShadow: '0px 2px 12px 0px rgba(0, 0, 0, 0.04)',
+                }}
               >
                 <Link
                   className="items-center md:gap-40 gap-20 w-full hidden sm:flex"
                   to={`/fairs/${_id}`}
                 >
-                  <strong className="flex-1 font-medium text-white">
+                  <strong className="flex-1 font-medium text-slate-800">
                     {name}
                   </strong>
 
                   <div className="flex flex-col items-end gap-1">
-                    <strong className="font-semibold text-white text-right">
+                    <strong className="font-semibold text-slate-800 text-right">
                       {formatDate(createdAt)}
                     </strong>
-                    <span className="text-gray-500 text-xs text-right">
+                    <span className="text-slate-400 text-xs text-right">
                       Data de criação
                     </span>
                   </div>
 
                   <div className="flex flex-col items-end gap-1">
-                    <strong
-                      className="font-semibold text-right"
-                      style={{ color: '#00B37E' }}
-                    >
+                    <strong className="font-semibold text-right text-green-400">
                       {formatPrice(2)}
                     </strong>
-                    <span className="text-gray-500 text-xs text-right">
+                    <span className="text-slate-400 text-xs text-right">
                       Gastos totais
                     </span>
                   </div>
                 </Link>
 
                 <Link className="block w-full sm:hidden" to={`/fairs/${_id}`}>
-                  <span className="text-gray-300 text-md">{name}</span>
+                  <span className="text-slate-800 font-medium text-md">
+                    {name}
+                  </span>
 
-                  <strong
-                    className="font-semibold text-xl block mb-4 mt-1"
-                    style={{ color: '#00B37E' }}
-                  >
+                  <strong className="font-semibold text-md block mb-4 mt-1 text-green-400">
                     {formatPrice(200)}
                   </strong>
 
                   <div className="flex justify-between">
-                    <div className="flex items-center gap-1 text-gray-500">
-                      <PiTagSimple size={16} />
-                      <span className="text-md">Janta</span>
+                    <div className="flex items-center gap-1 text-slate-400">
+                      <PiTagSimple size={14} />
+                      <span className="text-xs">Janta</span>
                     </div>
-                    <div className="flex items-center gap-1 text-gray-500">
-                      <MdCalendarToday size={16} />
-                      <span className="text-md">{formatDate(createdAt)}</span>
+                    <div className="flex items-center gap-1 text-slate-400">
+                      <MdCalendarToday size={14} />
+                      <span className="text-xs">{formatDate(createdAt)}</span>
                     </div>
                   </div>
                 </Link>

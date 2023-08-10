@@ -3,7 +3,8 @@ import api from './api'
 
 const DOMAIN = 'fairs'
 
-const getFairList = (): Promise<FairListResponse> => api.get(`${DOMAIN}`)
+const getFairList = (date: string): Promise<FairListResponse> =>
+  api.get(`${DOMAIN}?date=${date}`)
 
 const getFair = (id: string): Promise<FairResponse> =>
   api.get(`${DOMAIN}/${id}`)
