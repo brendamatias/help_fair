@@ -4,12 +4,12 @@ const api = axios.create({
   baseURL: 'https://help-fair-api.vercel.app',
 })
 
-// api.interceptors.request.use((config: any) => {
-//   const token = localStorage.getItem("feiraeco_token") ?? "";
-//   if (token) config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use((config: any) => {
+  const token = localStorage.getItem('help_fair') ?? ''
+  if (token) config.headers.Authorization = `Bearer ${token}`
 
-//   return config;
-// });
+  return config
+})
 
 // // api.interceptors.response.use(
 // //   (response: any) => response,
